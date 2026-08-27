@@ -30,14 +30,24 @@ Uses a 4-state FSM with **Mid-Bit Sampling** to prevent noise glitches:
 
 ---
 
-## 🛠️ Project Structure
+## 🔍 Behavioral Verification (QuestaSim)
 
-```text
-.
-├── uart_tx.v           # 4-State Transmitter RTL
-├── uart_rx.v           # 4-State Receiver RTL (Mid-Bit Sampling)
-├── tb_uart.v           # Testbench for loopback verification
-└── UART_Project.pdf    # Full report covering RTL, schematics & STA
-📊 Verification & Implementation Analysis
-1. Behavioral Simulation (QuestaSim)
-The system logic was verified using an automated loopback testbench (tb_uart.v). The testbench instantiates both the transmitter and receiver, feeding a test byte payload into tx_data and checking the output of rx_data.
+The design logic was verified in **QuestaSim** using an automated loopback testbench (`tb_uart.v`) that connects the transmitter output directly to the receiver input.
+
+### Test Environment & Strategy
+* **Data Payload:** Transmitted `8'hA5` (`8'b10100101`) to verify alternating 1s and 0s.
+* **Automated Checker:** Compares the final byte output in `rx_data` against the input `tx_data` upon assertion of `rx_done`.
+
+  ## 🛠️ Project Structure
+  .
+* ├── uart_tx.v           # 4-State Transmitter RTL
+* ├── uart_rx.v           # 4-State Receiver RTL (Mid-Bit Sampling)
+* ├── tb_uart.v           # Testbench for loopback verification
+*└── UART_Project.pdf    # Full report covering RTL, schematics & STA
+
+## Static Timing Analysis (STA)
+<img width="1025" height="224" alt="image" src="https://github.com/user-attachments/assets/75b08d8e-e68f-45f0-bb73-bf205ca17d57" />
+
+
+
+
