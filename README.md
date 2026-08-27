@@ -6,7 +6,7 @@ This repository contains the complete Verilog HDL implementation, QuestaSim beha
 
 ## 📐 System Architecture & Operation
 
-The system consists of a transmitter (`uart_tx`) and receiver (`uart_rx`) operating at **115,200 Baud** from a **50 MHz** system clock ($f_{clk}$). 
+The system consists of a transmitter (`uart_tx`) and receiver (`uart_rx`) operating at **115,200 Baud** from a **50 MHz** system clock ($f_{\text{clk}}$). 
 
 ### 1. Baud Rate Generation
 The bit period is derived by dividing the system clock frequency by the target baud rate:
@@ -30,28 +30,14 @@ Uses a 4-state FSM with **Mid-Bit Sampling** to prevent noise glitches:
 
 ---
 
-## 🛠 Project Structure
+## 🛠️ Project Structure
 
 ```text
+.
 ├── uart_tx.v           # 4-State Transmitter RTL
 ├── uart_rx.v           # 4-State Receiver RTL (Mid-Bit Sampling)
 ├── tb_uart.v           # Testbench for loopback verification
 └── UART_Project.pdf    # Full report covering RTL, schematics & STA
-## 📊 Verification & Implementation Analysis
-
-### 1. Behavioral Simulation (QuestaSim)
-The system logic was verified using an automated loopback testbench (`tb_uart.v`). The testbench instantiates both the transmitter and receiver, feeding a test byte payload into `tx_data` and checking the output of `rx_data`.
-
-* **Test Payload:** `8'hA5` (`8'b10100101`)
-* **Verification Logic:**
-  ```verilog
-  // Transmit byte and check received data
-  tx_data = 8'hA5;
-  start = 1;
-  #20 start = 0;
-  
-  @(posedge rx_done);
-  if (rx_data === 8'hA5) 
-      $display("SUCCESS: Sent 8'hA5 and received 8'hA5 correctly!");
-  else 
-      $display("ERROR: Data mismatch! Expected 8'hA5, got %h", rx_data);
+📊 Verification & Implementation Analysis
+1. Behavioral Simulation (QuestaSim)
+The system logic was verified using an automated loopback testbench (tb_uart.v). The testbench instantiates both the transmitter and receiver, feeding a test byte payload into tx_data and checking the output of rx_data.
